@@ -1,0 +1,8 @@
+name: jekyll-deploy
+description: 'Builds and deploys a jekyll page to GitHub pages'
+branding:
+  icon: 'chevrons-right'
+  color: 'gray-dark'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
