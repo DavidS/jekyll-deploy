@@ -6,3 +6,8 @@ branding:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+inputs:
+  build-only:
+    description: 'Set to "true" to only build, but not deploy. This is useful for PR testing'
+    required: false
+    default: "false"
