@@ -11,6 +11,8 @@ system_or_fail('bundle', 'config', 'set', 'path', 'vendor/gems')
 system_or_fail('bundle', 'install')
 system_or_fail('bundle', 'exec', 'jekyll', 'build', '--verbose', '--trace')
 
+exit if ENV['INPUT_BUILD-ONLY'] == "true"
+
 Dir.chdir('_site')
 File.open('.nojekyll', 'w') { |f| f.puts 'Skip Jekyll' }
 
