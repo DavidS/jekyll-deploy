@@ -1,6 +1,6 @@
 # jekyll-deploy
-Builds and deploys a jekyll page to GitHub pages
 
+Builds and deploys a jekyll page to GitHub pages
 
 ## Usage
 
@@ -18,7 +18,7 @@ on:
     - cron: "0 2 * * *"
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -48,7 +48,7 @@ name: Jekyll Test
 on: [ pull_request ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
