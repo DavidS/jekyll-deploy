@@ -8,7 +8,8 @@ def system_or_fail(*cmd)
 end
 
 system_or_fail('bundle', 'config', 'set', 'path', 'vendor/gems')
-system_or_fail('bundle', 'install')
+system_or_fail('bundle', 'config', 'set', 'deployment', 'true')
+system_or_fail('bundle', 'install', '--jobs=4', '--retry=3')
 system_or_fail('bundle', 'exec', 'jekyll', 'build', '--verbose', '--trace')
 
 exit if ENV['INPUT_BUILD-ONLY'] == "true"
