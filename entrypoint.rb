@@ -10,9 +10,13 @@ end
 system_or_fail('bundle', 'config', 'set', 'path', 'vendor/gems')
 system_or_fail('bundle', 'config', 'set', 'deployment', 'true')
 system_or_fail('bundle', 'install', '--jobs=4', '--retry=3')
-system_or_fail('bundle', 'exec', 'jekyll', 'build', '--verbose', '--trace')
 
-exit if ENV['INPUT_BUILD-ONLY'] == "true"
+if ENV['INPUT_BUILD-ONLY'] == "true"
+  system_or_fail('bundle', 'exec', 'jekyll', 'build', '--future', '--verbose', '--trace')
+  exit
+else
+  system_or_fail('bundle', 'exec', 'jekyll', 'build', '--verbose', '--trace')
+end
 
 Dir.chdir('_site')
 File.open('.nojekyll', 'w') { |f| f.puts 'Skip Jekyll' }
