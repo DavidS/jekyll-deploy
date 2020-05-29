@@ -4,6 +4,7 @@
 require 'fileutils'
 
 def system_or_fail(*cmd)
+  puts "executing #{cmd.inspect}"
   exit $CHILD_STATUS unless system(*cmd)
 end
 
