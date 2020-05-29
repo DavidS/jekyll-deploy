@@ -71,3 +71,5 @@ jobs:
           JEKYLL_ENV: production
           GH_PAGES_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
 ```
+
+The `GH_PAGES_TOKEN` needs the `repo_deployment` scope to be able to trigger deployments.
