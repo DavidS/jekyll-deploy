@@ -31,6 +31,7 @@ system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', '--depth=
 system_or_fail('git', 'reset', '--soft', 'origin/gh-pages')
 system_or_fail('git', 'add', '-A', '.')
 system_or_fail('git', 'commit', '-m', 'Update github pages')
+system_or_fail('git', 'log', '--graph', '--oneline', '--all')
 system_or_fail('git', 'merge', '-s', 'ours', 'origin/source')
 system_or_fail('git', 'push', 'origin', 'HEAD:gh-pages')
 
