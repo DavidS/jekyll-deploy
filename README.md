@@ -72,4 +72,4 @@ jobs:
           GH_PAGES_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
 ```
 
-The `GH_PAGES_TOKEN` needs the `repo_deployment` scope to be able to trigger deployments.
+The `GH_PAGES_TOKEN` needs the `public_repo` scope to be able to trigger deployments on a public repo or the full `repo` scope to deploy a private repository. Please note that this is circumventing GitHub's protection for infinitely recursive Actions invocations, so proceed with caution!
