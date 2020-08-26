@@ -8,6 +8,8 @@ def system_or_fail(*cmd)
   exit $CHILD_STATUS unless system(*cmd)
 end
 
+Dir.chdir(ENV['INPUT_SOURCE-DIR'])
+
 system_or_fail('bundle', 'config', 'set', 'path', 'vendor/gems')
 system_or_fail('bundle', 'config', 'set', 'deployment', 'true')
 system_or_fail('bundle', 'install', '--jobs=4', '--retry=3')
