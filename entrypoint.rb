@@ -5,11 +5,11 @@ require 'fileutils'
 
 def system_or_fail(*cmd)
   puts "executing #{cmd.inspect}"
-  unless system(*cmd)
+  if system(*cmd)
+    puts "executed #{cmd.inspect} successfully"
+  else
     puts "execution failed with #{$CHILD_STATUS}"
     exit $CHILD_STATUS
-  else
-    puts "executed #{cmd.inspect} successfully"
   end
 end
 
