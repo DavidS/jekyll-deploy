@@ -1,10 +1,16 @@
 # jekyll-deploy
 
-Builds and deploys a jekyll page to GitHub pages
+Builds and deploys a jekyll page to GitHub pages.
+
+Features:
+* build and test modes
+* record the site's source commit using a merge commit
+* specify a target branch
 
 ## Usage
 
 To deploy from master and update once a day:
+
 ```yaml
 name: Jekyll Deploy
 
