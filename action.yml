@@ -1,13 +1,17 @@
 name: jekyll-deploy
-description: 'Builds and deploys a jekyll page to GitHub pages'
+description: "Builds and deploys a jekyll page to GitHub pages"
 branding:
-  icon: 'chevrons-right'
-  color: 'gray-dark'
+  icon: "chevrons-right"
+  color: "gray-dark"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
 inputs:
   build-only:
-    description: 'Set to "true" to only build, but not deploy. This is useful for PR testing'
+    description: Set to "true" to only build, but not deploy. This is useful for PR testing.
     required: false
     default: "false"
+  target-branch:
+    description: Specify the branch to deploy the site to. By default, this is "gh-pages", GitHub's default branch for doc sites.
+    required: false
+    default: "gh-pages"

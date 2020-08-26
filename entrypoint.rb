@@ -27,12 +27,12 @@ FileUtils.cp('../.git/config', '.git/config')
 system_or_fail('git', 'config', 'user.name', ENV['GITHUB_ACTOR'])
 system_or_fail('git', 'config', 'user.email', "#{ENV['GITHUB_ACTOR']}@users.noreply.github.com")
 system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', 'origin', "+#{ENV['GITHUB_SHA']}:refs/remotes/origin/source")
-system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', 'origin', '+gh-pages:refs/remotes/origin/gh-pages')
-system_or_fail('git', 'reset', '--soft', 'origin/gh-pages')
+system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', 'origin', "+#{ENV['INPUT_TARGET-BRANCH']}:refs/remotes/origin/#{ENV['INPUT_TARGET-BRANCH']}")
+system_or_fail('git', 'reset', '--soft', "origin/#{ENV['INPUT_TARGET-BRANCH']}")
 system_or_fail('git', 'add', '-A', '.')
 system_or_fail('git', 'commit', '-m', 'Update github pages')
 system_or_fail('git', 'merge', '-s', 'ours', 'origin/source')
-system_or_fail('git', 'push', 'origin', 'HEAD:gh-pages')
+system_or_fail('git', 'push', 'origin', "HEAD:#{ENV['INPUT_TARGET-BRANCH']}")
 
 puts "triggering a github pages deploy"
 
