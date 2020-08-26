@@ -73,3 +73,17 @@ jobs:
 ```
 
 The `GH_PAGES_TOKEN` needs the `public_repo` scope to be able to trigger deployments on a public repo or the full `repo` scope to deploy a private repository. Please note that this is circumventing GitHub's protection for infinitely recursive Actions invocations, so proceed with caution!
+
+## Specifying a target branch
+
+By default, this action deploys the compiled output to `gh-pages`, GitHub's default. If you want to use a different branch, you can use the `target-branch` input to do so. For example, to deploy to `master`:
+
+```yaml
+      - name: Build & Deploy to custom branch
+        uses: DavidS/jekyll-deploy@master
+        with:
+          target-branch: master
+        env:
+          JEKYLL_ENV: production
+          GH_PAGES_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+```
