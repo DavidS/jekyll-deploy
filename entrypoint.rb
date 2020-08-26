@@ -15,6 +15,7 @@ end
 
 basedir = Dir.pwd
 Dir.chdir(ENV['INPUT_SOURCE-DIR'])
+sourcedir = Dir.pwd
 
 system_or_fail('bundle', 'config', 'set', 'path', 'vendor/gems')
 system_or_fail('bundle', 'config', 'set', 'deployment', 'true')
@@ -43,6 +44,12 @@ else
   puts "Didn't find target branch '#{ENV['INPUT_TARGET-BRANCH']}', using the source as a base"
   system_or_fail('git', 'reset', '--soft', "origin/source")
 end
+
+if File.exist?(File.join(sourcedir, 'CNAME')) && !File.exist?('CNAME')
+  puts "Rendering github's CNAME file"
+  FileUtils.cp(File.join(sourcedir, 'CNAME'), 'CNAME')
+end
+
 system_or_fail('git', 'add', '-A', '.')
 system_or_fail('git', 'commit', '-m', 'Update github pages')
 system_or_fail('git', 'merge', '-s', 'ours', 'origin/source')
