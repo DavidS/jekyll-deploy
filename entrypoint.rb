@@ -5,7 +5,12 @@ require 'fileutils'
 
 def system_or_fail(*cmd)
   puts "executing #{cmd.inspect}"
-  exit $CHILD_STATUS unless system(*cmd)
+  unless system(*cmd)
+    puts "execution failed with #{$CHILD_STATUS}"
+    exit $CHILD_STATUS
+  else
+    puts "executed #{cmd.inspect} successfully"
+  end
 end
 
 Dir.chdir(ENV['INPUT_SOURCE-DIR'])
