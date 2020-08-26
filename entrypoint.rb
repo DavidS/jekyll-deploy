@@ -13,6 +13,7 @@ def system_or_fail(*cmd)
   end
 end
 
+basedir = Dir.pwd
 Dir.chdir(ENV['INPUT_SOURCE-DIR'])
 
 system_or_fail('bundle', 'config', 'set', 'path', 'vendor/gems')
@@ -30,12 +31,18 @@ Dir.chdir('_site')
 File.open('.nojekyll', 'w') { |f| f.puts 'Skip Jekyll' }
 
 system_or_fail('git', 'init', '.')
-FileUtils.cp('../.git/config', '.git/config')
+FileUtils.cp(File.join(basedir, '/.git/config'), '.git/config')
 system_or_fail('git', 'config', 'user.name', ENV['GITHUB_ACTOR'])
 system_or_fail('git', 'config', 'user.email', "#{ENV['GITHUB_ACTOR']}@users.noreply.github.com")
 system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', 'origin', "+#{ENV['GITHUB_SHA']}:refs/remotes/origin/source")
-system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', 'origin', "+#{ENV['INPUT_TARGET-BRANCH']}:refs/remotes/origin/#{ENV['INPUT_TARGET-BRANCH']}")
-system_or_fail('git', 'reset', '--soft', "origin/#{ENV['INPUT_TARGET-BRANCH']}")
+if %x(git ls-remote --heads origin) =~ %r{\trefs/heads/#{ENV['INPUT_TARGET-BRANCH']}\n}
+  puts "Found target branch '#{ENV['INPUT_TARGET-BRANCH']}', using that as base"
+  system_or_fail('git', 'fetch', '--no-tags', '--no-recurse-submodules', 'origin', "+#{ENV['INPUT_TARGET-BRANCH']}:refs/remotes/origin/#{ENV['INPUT_TARGET-BRANCH']}")
+  system_or_fail('git', 'reset', '--soft', "origin/#{ENV['INPUT_TARGET-BRANCH']}")
+else
+  puts "Didn't find target branch '#{ENV['INPUT_TARGET-BRANCH']}', using the source as a base"
+  system_or_fail('git', 'reset', '--soft', "origin/source")
+end
 system_or_fail('git', 'add', '-A', '.')
 system_or_fail('git', 'commit', '-m', 'Update github pages')
 system_or_fail('git', 'merge', '-s', 'ours', 'origin/source')
