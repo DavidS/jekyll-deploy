@@ -10,7 +10,7 @@ Features:
 
 ## Usage
 
-To deploy from master and update once a day:
+To deploy every update to the `main` branch and regenerate the site once a day:
 
 ```yaml
 name: Jekyll Deploy
@@ -18,8 +18,8 @@ name: Jekyll Deploy
 on:
   push:
     branches:
-      # only deploy from master
-      - master
+      # deploy on updates on main
+      - main
   schedule:
     # redeploy every morning to update unpublished pages
     - cron: "0 2 * * *"
@@ -41,7 +41,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Build & Deploy to GitHub Pages
-        uses: DavidS/jekyll-deploy@master
+        uses: DavidS/jekyll-deploy@main
         env:
           JEKYLL_ENV: production
           GH_PAGES_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Test
-        uses: DavidS/jekyll-deploy@master
+        uses: DavidS/jekyll-deploy@
         with:
           build-only: true
         env:
@@ -87,7 +87,7 @@ If your site's source is not at the root of the repository, you can use the `sou
 
 ```yaml
       - name: Build & Deploy to custom branch
-        uses: DavidS/jekyll-deploy@master
+        uses: DavidS/jekyll-deploy@
         with:
           source-dir: docs/jekyll
         env:
@@ -98,13 +98,13 @@ If your site's source is not at the root of the repository, you can use the `sou
 
 ## Specifying a target branch
 
-By default, this action deploys the compiled output to `gh-pages`, GitHub's default. If you want to use a different branch, you can use the `target-branch` input to do so. For example, to deploy to `master`:
+By default, this action deploys the compiled output to `gh-pages`, GitHub's default. If you want to use a different branch, you can use the `target-branch` input to do so. For example, to deploy to `docs`:
 
 ```yaml
       - name: Build & Deploy to custom branch
-        uses: DavidS/jekyll-deploy@master
+        uses: DavidS/jekyll-deploy@main
         with:
-          target-branch: master
+          target-branch: docs
         env:
           JEKYLL_ENV: production
           GH_PAGES_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
