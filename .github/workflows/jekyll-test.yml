@@ -3,7 +3,7 @@ name: Jekyll Test
 on: [ pull_request ]
 
 jobs:
-  deploy:
+  test:
     runs-on: ubuntu-latest
 
     steps:
