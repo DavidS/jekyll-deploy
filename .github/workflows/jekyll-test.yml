@@ -12,7 +12,7 @@ jobs:
       - name: Cache gems
         uses: actions/cache@v1
         with:
-          path: vendor/gems
+          path: tests/vendor/gems
           key: ${{ runner.os }}-build-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-build-
