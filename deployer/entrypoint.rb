@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'English'
 require 'fileutils'
 
 def system_or_fail(*cmd)
@@ -8,12 +9,21 @@ def system_or_fail(*cmd)
   if system(*cmd)
     puts "executed #{cmd.inspect} successfully"
   else
-    puts "execution failed with #{$CHILD_STATUS}"
-    exit $CHILD_STATUS
+    puts "execution failed with '#{$CHILD_STATUS}'"
+    exit $CHILD_STATUS.exitstatus
   end
 end
 
 basedir = Dir.pwd
+
+if ENV['INPUT_ADJUST-LAST-MODIFIED'] == "true"
+  # help jekyll with stable last modified times to avoid churning timestamps
+  puts "Adjusting mtime/last modified times"
+  system_or_fail('git', 'restore-mtime', '--merge', ENV['INPUT_SOURCE-DIR'])
+else
+  puts "Adjusting mtime/last modified times disabled in config"
+end
+
 Dir.chdir(ENV['INPUT_SOURCE-DIR'])
 sourcedir = Dir.pwd
 
