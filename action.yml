@@ -5,12 +5,16 @@ branding:
   color: "gray-dark"
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "deployer/Dockerfile"
 inputs:
   build-only:
     description: Set to "true" to only build, but not deploy. This is useful for PR testing.
     required: false
     default: "false"
+  adjust-last-modified:
+    description: By default this action clamps last-modified times to the date of the last commit modifying it. This reduces the amount of churn of updating timestamps in the rendered files. Set this to "false" to use the build time instead.
+    required: false
+    default: "true"
   source-dir:
     description: Specify a subdirectory containing the jekyll site, relative to the root of the repository. If this is not specified, the site is expected to be in the root of the repository.
     required: false

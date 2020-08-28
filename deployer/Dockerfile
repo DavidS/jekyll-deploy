@@ -4,7 +4,11 @@ LABEL "com.github.actions.description"="Builds and deploys a jekyll page to GitH
 LABEL "com.github.actions.icon"="chevrons-right"
 LABEL "com.github.actions.color"="gray-dark"
 
-RUN gem install bundler -v 2.1.4
+RUN gem install bundler -v 2.1.4 \
+  && apt update \
+  && apt install -y git-restore-mtime \
+  && apt clean \
+  && rm -rf /var/lib/apt/lists/*
 
 ADD entrypoint.rb /entrypoint.rb
 ENTRYPOINT ["/entrypoint.rb"]
