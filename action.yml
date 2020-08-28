@@ -5,7 +5,7 @@ branding:
   color: "gray-dark"
 runs:
   using: "docker"
-  image: "Dockerfile"
+  image: "deployer/Dockerfile"
 inputs:
   build-only:
     description: Set to "true" to only build, but not deploy. This is useful for PR testing.
