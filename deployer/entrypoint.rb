@@ -15,6 +15,15 @@ def system_or_fail(*cmd)
 end
 
 basedir = Dir.pwd
+
+if ENV['INPUT_ADJUST-LAST-MODIFIED'] == "true"
+  # help jekyll with stable last modified times to avoid churning timestamps
+  puts "Adjusting mtime/last modified times"
+  system_or_fail('git', 'restore-mtime', '--merge', ENV['INPUT_SOURCE-DIR'])
+else
+  puts "Adjusting mtime/last modified times disabled in config"
+end
+
 Dir.chdir(ENV['INPUT_SOURCE-DIR'])
 sourcedir = Dir.pwd
 
