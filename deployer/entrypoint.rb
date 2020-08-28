@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'English'
 require 'fileutils'
 
 def system_or_fail(*cmd)
@@ -8,8 +9,8 @@ def system_or_fail(*cmd)
   if system(*cmd)
     puts "executed #{cmd.inspect} successfully"
   else
-    puts "execution failed with #{$CHILD_STATUS}"
-    exit $CHILD_STATUS
+    puts "execution failed with '#{$CHILD_STATUS}'"
+    exit $CHILD_STATUS.exitstatus
   end
 end
 
